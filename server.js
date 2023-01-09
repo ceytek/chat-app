@@ -1,13 +1,14 @@
 const express = require('express');
 const socket = require('socket.io');
+const path = require("path");
 
 require('dotenv').config()
 const port = process.env.PORT;  
 
 const app = express();
 const server = app.listen(port || 3000);
+app.use(express.static(path.join(__dirname, "public")));
 
-app.use(express.static('public'));
 
 const io = socket(server);
 

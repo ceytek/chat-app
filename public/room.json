@@ -1,0 +1,18 @@
+[
+    {
+        "room_id": "1",
+        "room_name": "Javascript"
+    },
+    {
+        "room_id": "2",
+        "room_name": "Node.js"
+    },
+    {
+        "room_id": "3",
+        "room_name": "Python"
+    },
+    {
+        "room_id": "4",
+        "room_name": "C++"
+    }
+]

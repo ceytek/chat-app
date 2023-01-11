@@ -14,10 +14,10 @@
         fetch('room.json')
             .then((res) => res.json())
             .then((data) => {
-                let output = '<h2>Trains</h2>';
-                data.forEach(function (trains) {
+                let output = '<h2>Rooms</h2>';
+                data.forEach(function (rooms) {
                     output += `
-            <option value="${trains.room_id}">${trains.room_name}</option>
+            <option value="${rooms.room_id}">${rooms.room_name}</option>
             `;
                 });
                 document.getElementById('room').innerHTML = output;
@@ -40,7 +40,7 @@
             <form action="chat.html">
                 <div class="form-control">
                     <label for="username">Kullanıcı Adı</label>
-                    <input type="text" name="username" id="username" placeholder="Enter username..." required />
+                    <input type="text" name="username" id="username" placeholder="Kullanıcı Adınız..." required />
                 </div>
                 <div class="form-control">
                     <label for="room">Oda</label>
@@ -50,7 +50,7 @@
 
                     </select>
                 </div>
-                <button type="submit" class="btn" onclick="station1()">Join Chat</button>
+                <button type="submit" class="btn" onclick="station1()">Giriş</button>
             </form>
         </main>
     </div>

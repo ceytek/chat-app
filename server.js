@@ -9,6 +9,11 @@ const app = express();
 const server = app.listen(port || 3000);
 app.use(express.static(path.join(__dirname, "public")));
 
+const Redis = require('ioredis');
+const redis = new Redis({
+    host: process.env.REDIS_HOST,
+    por: process.env.REDIS_PORT
+})
 
 const io = socket(server);
 

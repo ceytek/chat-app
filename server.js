@@ -1,30 +1,23 @@
-const express = require('express');
-const socket = require('socket.io');
 const path = require("path");
+const http = require('http');
+const socket = require('socket.io');
+const express = require('express');
 
 require('dotenv').config()
-const port = process.env.PORT;  
+const PORT = 300 || process.env.PORT;  
+
+
 
 const app = express();
-const server = app.listen(port || 3000);
+const server = http.createServer(app);
+server.listen(PORT , () => console.log(`Server is running on port ${PORT}`));
 app.use(express.static(path.join(__dirname, "public")));
 
 const Redis = require('ioredis');
 const redis = new Redis({
     host: process.env.REDIS_HOST,
-    por: process.env.REDIS_PORT
+    port: process.env.REDIS_PORT
 })
 
 const io = socket(server);
 
-io.on('connection', (socket)=>{
-    console.log(socket.id)
-
-    socket.on('chat', data =>{
-        io.sockets.emit('chat', data); 
-    })
-
-    socket.on('typing', data => {
-        socket.broadcast.emit('typing', data)
-    })
-});

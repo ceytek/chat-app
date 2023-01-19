@@ -19,5 +19,11 @@ const redis = new Redis({
     port: process.env.REDIS_PORT
 })
 
+
 const io = socket(server);
+
+//Run when client connect
+io.on('connect', socket =>{
+    console.log("New User came")
+});
 

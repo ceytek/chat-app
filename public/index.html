@@ -1,27 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CT Chat</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.js" integrity="sha512-YeeA/Qxn5hYdkukScTCNNOhTrv1C2RubAGButJ1rmgQwZf/HdRaCGl+JAVkqsqaNRaYNHdheiuKKuPf9mDcqKg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<link rel="stylesheet" href="css/style.css">
+    <title>Chat | Login</title>
+    <link rel="stylesheet" href="css/style_login.css">
+
 </head>
+<script>
+    function station1() {
+        fetch('room.json')
+            .then((res) => res.json())
+            .then((data) => {
+                let output = '<h2>Rooms</h2>';
+                data.forEach(function (rooms) {
+                    output += `
+            <option value="${rooms.room_id}">${rooms.room_name}</option>
+            `;
+                });
+                document.getElementById('room').innerHTML = output;
+            })
+    }
+</script>
+<script>
+    addEventListener('load', (event) => {
+        station1();
+    });
+</script>
 
 <body>
 
-<div id="chat-wrap">
-    <h2>CT Chat </h2>
-    <div id="chat-window">
-     <div id="output"></div>
-     <div id="feedback"></div>
+    <div class="join-container">
+        <header class="join-header">
+            <h1><i class="fas fa-smile"></i> Chat</h1>
+        </header>
+        <main class="join-main">
+            <form action="chat.html">
+                <div class="form-control">
+                    <label for="username">Kullanıcı Adı</label>
+                    <input type="text" name="username" id="username" placeholder="Kullanıcı Adınız..." required />
+                </div>
+                <div class="form-control">
+                    <label for="room">Oda</label>
+                    <select name="room" id="room">
+
+
+
+                    </select>
+                </div>
+                <button type="submit" class="btn" onclick="station1()">Giriş</button>
+            </form>
+        </main>
     </div>
-    <input type="text" id="sender" placeholder="Ad"> 
-    <input type="text" id="message" placeholder="Mesaj"> 
-    <button id="submitBtn">Send</button>
-</div>
-    
-    <script src="chat.js" charset="utf-8"></script>
 </body>
+
 </html>

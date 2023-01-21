@@ -4,7 +4,7 @@ const socket = require('socket.io');
 const express = require('express');
 
 require('dotenv').config()
-const PORT = 300 || process.env.PORT;  
+const PORT = 3000 || process.env.PORT;  
 
 
 
@@ -27,3 +27,6 @@ io.on('connect', socket =>{
     console.log("New User came")
 });
 
+io.on('disconnect', socket =>{
+    console.log("Disconnect")
+})

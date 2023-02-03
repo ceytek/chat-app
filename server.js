@@ -25,6 +25,7 @@ const io = socketio(server);
 io.on('connect', socket =>{
     console.log("New User came");
 
+
     socket.emit("message", "Welcome to Chat")
 });
 

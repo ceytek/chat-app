@@ -26,12 +26,17 @@ io.on('connect', socket =>{
     console.log("New User came");
 
 
-    socket.emit("message", "Welcome to Chat")
+    socket.emit("message", "Welcome to Chat");
+    socket.broadcast.emit("message","New User came" );
+    socket.on('disconnect', () =>{
+        io.emit('message', 'Kullanıcı ayrıldı.')
+    });
+
+    socket.on('chatMessage',msg =>{
+      io.emit('message', msg)
+    });
 });
 
-io.on('disconnect', socket =>{
-    console.log("Disconnect")
-})
 
 
 server.listen(PORT , () => console.log(`Server is running on port ${PORT}`));

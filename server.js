@@ -2,6 +2,7 @@ const path = require("path");
 const http = require('http');
 const socketio = require('socket.io');
 const express = require('express');
+const formatMessage = require('./utils/messages');
 
 require('dotenv').config()
 const PORT = 3001 || process.env.PORT;  
@@ -11,6 +12,7 @@ const server = http.createServer(app);
 
 
 app.use(express.static(path.join(__dirname, "public")));
+const username = 'ceytek';
 
 const Redis = require('ioredis');
 const redis = new Redis({
@@ -26,14 +28,14 @@ io.on('connect', socket =>{
     console.log("New User came");
 
 
-    socket.emit("message", "Welcome to Chat");
-    socket.broadcast.emit("message","New User came" );
+    socket.emit("message", formatMessage(username ,'Welcome to Chat'));
+    socket.broadcast.emit("message",formatMessage(username ,'New User came' ));
     socket.on('disconnect', () =>{
-        io.emit('message', 'Kullanıcı ayrıldı.')
+        io.emit('message', formatMessage(username ,'Kullanıcı ayrıldı.'));
     });
 
     socket.on('chatMessage',msg =>{
-      io.emit('message', msg)
+      io.emit('message',formatMessage('User' , msg));
     });
 });
 

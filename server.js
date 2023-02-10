@@ -13,7 +13,7 @@ const server = http.createServer(app);
 
 
 app.use(express.static(path.join(__dirname, "public")));
-const username = 'ceytek';
+const bot = 'ceytek';
 
 const Redis = require('ioredis');
 const redis = new Redis({
@@ -30,19 +30,20 @@ io.on('connect', socket =>{
     const user =userJoin(socket.id, username, room)
     socket.join(user.room)
        
-    socket.emit('message', formatMessage(username ,'Welcome to Chat'));
+    socket.emit('message', formatMessage(bot ,'Welcome to Chat'));
    
     socket.broadcast
      .to(user.room)
      .emit('message',
-     formatMessage(username ,`${user.username} came`)
+     formatMessage(bot ,`${user.username} came`)
     );
     
     socket.on('chatMessage',msg =>{
-        io.emit('message',formatMessage('User' , msg));
+        constuser = getCurrentUser(socket.id)
+        io.to(user.room).emit('message',formatMessage(user.username , msg));
       });
     socket.on('disconnect', () =>{
-        io.emit('message', formatMessage(username ,'Kullanıcı ayrıldı.'));
+        io.emit('message', formatMessage(bot ,`${user.username} sohbetten ayrıldı.`));
     });
 
     })

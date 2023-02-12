@@ -39,7 +39,7 @@ io.on('connect', socket =>{
     );
     
     socket.on('chatMessage',msg =>{
-        constuser = getCurrentUser(socket.id)
+        const user = getCurrentUser(socket.id)
         io.to(user.room).emit('message',formatMessage(user.username , msg));
       });
     socket.on('disconnect', () =>{

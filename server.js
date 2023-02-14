@@ -30,12 +30,12 @@ io.on('connect', socket =>{
     const user =userJoin(socket.id, username, room)
     socket.join(user.room)
        
-    socket.emit('message', formatMessage(bot ,'Welcome to Chat'));
+    socket.emit('message', formatMessage(bot ,'Hoş geldiniz.'));
    
     socket.broadcast
      .to(user.room)
      .emit('message',
-     formatMessage(bot ,`${user.username} came`)
+     formatMessage(bot ,`${user.username} giriş yaptı.`)
     );
     
     socket.on('chatMessage',msg =>{

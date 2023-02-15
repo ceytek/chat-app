@@ -3,7 +3,7 @@ const http = require('http');
 const socketio = require('socket.io');
 const express = require('express');
 const formatMessage = require('./utils/messages');
-const {userJoin, getCurrentUser} = require('./utils/users');
+const {userJoin, getCurrentUser, userLeave} = require('./utils/users');
 
 require('dotenv').config()
 const PORT = 3001 || process.env.PORT;  
@@ -43,7 +43,11 @@ io.on('connect', socket =>{
         io.to(user.room).emit('message',formatMessage(user.username , msg));
       });
     socket.on('disconnect', () =>{
-        io.emit('message', formatMessage(bot ,`${user.username} sohbetten ayrıldı.`));
+        const user = userLeave(socket.id);
+        if(user){
+            io.to(user.room).emit('message', formatMessage(bot ,`${user.username} sohbetten ayrıldı.`));
+        }
+      
     });
 
     })

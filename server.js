@@ -45,7 +45,10 @@ io.on('connect', socket =>{
     socket.on('disconnect', () =>{
         const user = userLeave(socket.id);
         if(user){
-            io.to(user.room).emit('message', formatMessage(bot ,`${user.username} sohbetten ayrıldı.`));
+            io.to(user.room).emit
+            ('message',
+             formatMessage(bot ,`${user.username} sohbetten ayrıldı.`)
+             );
         }
       
     });

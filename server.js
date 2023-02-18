@@ -32,16 +32,27 @@ io.on('connect', socket =>{
        
     socket.emit('message', formatMessage(bot ,'Hoş geldiniz.'));
    
+
+    //Broadcast when a user connects
     socket.broadcast
      .to(user.room)
      .emit('message',
      formatMessage(bot ,`${user.username} giriş yaptı.`)
     );
+
+    // Send users and room info
+    io.to(user.room).emit('roomUser', {
+        room: user.room,
+        users: getRoomUsers(user.room)
+    })
     
+    //Listen for chatMessage
     socket.on('chatMessage',msg =>{
         const user = getCurrentUser(socket.id)
         io.to(user.room).emit('message',formatMessage(user.username , msg));
       });
+    
+    //Runs when cliend disconnects
     socket.on('disconnect', () =>{
         const user = userLeave(socket.id);
         if(user){
@@ -49,6 +60,12 @@ io.on('connect', socket =>{
             ('message',
              formatMessage(bot ,`${user.username} sohbetten ayrıldı.`)
              );
+
+        // Send users and room info
+        io.to(user.room).emit('roomUser', {
+        room: user.room,
+        users: getRoomUsers(user.room)
+    })
         }
       
     });

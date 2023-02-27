@@ -16,6 +16,7 @@ app.use(express.static(path.join(__dirname, "public")));
 const bot = 'ceytek';
 
 const Redis = require('ioredis');
+const { env } = require("process");
 const redis = new Redis({
     host: process.env.REDIS_HOST,
     port: process.env.REDIS_PORT

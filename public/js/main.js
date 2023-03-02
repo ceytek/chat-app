@@ -48,7 +48,9 @@ function outputMessage(message) {
 
 // Add room name to DOM
 function outputRoomName(room){
-    roomName.innerHTML = room;
+    roomName.innerText = room;
+  
+    
 
 }
 

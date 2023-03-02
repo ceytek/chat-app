@@ -3,7 +3,7 @@ const http = require('http');
 const socketio = require('socket.io');
 const express = require('express');
 const formatMessage = require('./utils/messages');
-const {userJoin, getCurrentUser, userLeave} = require('./utils/users');
+const {userJoin, getCurrentUser, userLeave, getRoomUsers} = require('./utils/users');
 
 require('dotenv').config()
 const PORT = 3001 || process.env.PORT;  
@@ -42,11 +42,12 @@ io.on('connection', socket =>{
     );
 
     // Send users and room info
-    io.to(user.room).emit('roomUser', {
+    io.to(user.room).emit("roomUsers", {
         room: user.room,
-        users: getRoomUsers(user.room)
-    })
-    
+        users: getRoomUsers(user.room),
+      });
+    });
+  
     //Listen for chatMessage
     socket.on('chatMessage',msg =>{
         const user = getCurrentUser(socket.id)
@@ -74,7 +75,7 @@ io.on('connection', socket =>{
     })
 
 
-});
+
 
 
 
